@@ -2,54 +2,49 @@ package org.pravaha.bpmn.domain;
 
 
 import java.io.Serializable;
-import java.util.Calendar;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
 
 
 @Entity
-@Table(name="Tbl_process_runtime")
+@Table(name="TBL_PROCESS_RUNTIME")
 @Data
 public class ProcessRuntimeDomain implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@Column(name="process_id")
+	@Column(name="PROCESS_ID")
 	private String processId;
 	
-	@Column(name="process_name")
+	@Column(name="BUSINESS_KEY")
+	private String businessKey;
+	
+	@Column(name="PROCESS_NAME")
 	private String processName;
 	
 	
-//	@Column(name="start_date")
-	@Temporal(TemporalType.DATE)
-//	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Calendar startDate;
+	@Column(name="START_DATE")
+	private Date startDate;
 
 
-	@Column(name="last_update_date")
-	private Calendar lastUpdateDate;
+	@Column(name="LAST_UPDATE_DATE")
+	private Date lastUpdateDate;
 
-	@Column(name="end_date")
-	private Calendar endDate;
+	@Column(name="END_DATE")
+	private Date endDate;
 
-	@Column(name="Status")
+	@Column(name="STATUS")
 	private int status;
 
-	@Column(name="parent_process_id")
+	@Column(name="PARENT_PROCESS_ID")
 	private String parentProcessId;
 	
-	@Column(name="version")
+	@Column(name="VERSION")
 	private String processVer;
 
 	public ProcessRuntimeDomain() {
@@ -60,7 +55,7 @@ public class ProcessRuntimeDomain implements Serializable{
 	public String toString()
 	{
 		StringBuffer strbuffer= new StringBuffer();
-		strbuffer.append(this.processId+ " => "+this.processName+" || "+this.status+" || "+this.processVer);
+		strbuffer.append(this.processId+ " => "+" || "+this.businessKey+" || "+this.processName+" || "+this.status+" || "+this.processVer);
 		return strbuffer.toString();
 	}
 }
