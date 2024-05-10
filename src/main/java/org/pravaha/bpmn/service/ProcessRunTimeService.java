@@ -1,5 +1,6 @@
 package org.pravaha.bpmn.service;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -15,6 +16,7 @@ import org.pravaha.bpmn.dataaccess.ProcessRuntimeDao;
 import org.pravaha.bpmn.domain.ProcessRuntimeDomain;
 import org.pravaha.bpmn.model.ProcessRuntimeVO;
 import org.pravaha.bpmn.repository.ProcessRuntimeRepository;
+import org.pravaha.bpmn.util.LocalDateTimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.ParseException;
 import org.springframework.stereotype.Service;
@@ -56,13 +58,8 @@ public class ProcessRunTimeService extends ProcessRuntimeDao {
 		return null;
 	}
 
-	public List<ProcessRuntimeVO> getProcessRuntimeByDateBetween(Date startDate, Date endDate) {
-		System.out.println("Start date : "+startDate);
-		System.out.println("End date : "+endDate);
-		
+	public List<ProcessRuntimeVO> getProcessRuntimeByDateBetween(Date startDate, Date endDate) {		
 		List<ProcessRuntimeDomain> procRTList = processRuntimeRepository.findByStartDateBetween(startDate, endDate);
-		for(ProcessRuntimeDomain poc: procRTList)
-			System.out.println("Domain Object : -----> "+poc);
 		if (procRTList != null) {
 			return convertListDomaintoListVO(procRTList);
 		}
@@ -70,10 +67,11 @@ public class ProcessRunTimeService extends ProcessRuntimeDao {
 	}
 
 	public List<Map<String,Object>> todaysRecord() throws java.text.ParseException {
-		Date date = getTodaysDate();
+		Date date = LocalDateTimeUtil.getTodaysDate();
 		List<Map<String,Object>> mapList = processRuntimeRepository.getStatusCountForToday(date);
-		
-		return mapList;
+		if(mapList !=null)
+			return mapList;
+		return null;
 	}
 
 
@@ -112,18 +110,6 @@ public class ProcessRunTimeService extends ProcessRuntimeDao {
 
 		return null;
 	}
-	
-	public Date getTodaysDate() throws java.text.ParseException {
-	    Date todaysDate = Calendar.getInstance().getTime();
-	    DateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-	    String outputDateStr = outputFormat.format(todaysDate); // Format the date to string
-	    Date date = null;
-	    try {
-	        date = outputFormat.parse(outputDateStr); // Parse the formatted date string
-	    } catch (ParseException e) {
-	        e.printStackTrace();
-	    }
-	    return date;
-	}
+
 
 }

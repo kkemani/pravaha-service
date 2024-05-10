@@ -5,9 +5,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.pravaha.bpmn.domain.ProcessTaskDomain;
 import org.pravaha.bpmn.model.ProcessRuntimeSearchVO;
 import org.pravaha.bpmn.model.ProcessRuntimeVO;
+import org.pravaha.bpmn.model.ProcessTaskVO;
 import org.pravaha.bpmn.service.ProcessRunTimeService;
+import org.pravaha.bpmn.service.ProcessTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +26,9 @@ public class ProcessRuntimeController {
 	@Autowired
 	ProcessRunTimeService processRunTimeService;
 
+	@Autowired
+	ProcessTaskService processTaskService;
+
 	@PostMapping("/savePRRunTime")
 	public ProcessRuntimeVO saveProcessRuntime(@RequestBody ProcessRuntimeVO prRunTimeVo) {
 		prRunTimeVo = processRunTimeService.saveProcessRuntime(prRunTimeVo);
@@ -35,7 +41,7 @@ public class ProcessRuntimeController {
 
 		return prRunTimeVo;
 	}
-	
+
 	@GetMapping(value = "/getByBusinessKey/{businesskey}")
 	public List<ProcessRuntimeVO> getByBusinessKey(@PathVariable("businesskey") String businesskey) {
 		List<ProcessRuntimeVO> prRunTimeVo = processRunTimeService.getPrRuntimeByBusinessKey(businesskey);
@@ -45,16 +51,17 @@ public class ProcessRuntimeController {
 
 	@PostMapping(value = "/getByStartDateBetween")
 	public List<ProcessRuntimeVO> getByStartDateBetween(@RequestBody ProcessRuntimeSearchVO processRuntimeSearchVO) {
-		List<ProcessRuntimeVO> prRunTimeVOList = processRunTimeService.getProcessRuntimeByDateBetween(processRuntimeSearchVO.getStartDate(), processRuntimeSearchVO.getEndDate());
+		List<ProcessRuntimeVO> prRunTimeVOList = processRunTimeService.getProcessRuntimeByDateBetween(
+				processRuntimeSearchVO.getStartDate(), processRuntimeSearchVO.getEndDate());
 
 		return prRunTimeVOList;
 	}
-	
+
 	@GetMapping(value = "/getTodaysStatus")
-	public List<Map<String,Object>> getTodaysStatus() {
+	public List<Map<String, Object>> getTodaysStatus() {
 		try {
-			List<Map<String,Object>> voList = processRunTimeService.todaysRecord();
-			if(voList!=null)
+			List<Map<String, Object>> voList = processRunTimeService.todaysRecord();
+			if (voList != null)
 				return voList;
 			else
 				return null;
@@ -64,5 +71,29 @@ public class ProcessRuntimeController {
 		return null;
 	}
 
+	@GetMapping(value = "/getTask/{processId}/{taskId}")
+	public ProcessTaskVO getTask(@PathVariable("processId") String processId, @PathVariable("taskId") Long taskId) {
+		return processTaskService.getTask(processId, taskId);
+	}
+
+	@GetMapping(value = "updateTaskstatus/{processId}/{taskId}/{taskStatus}")
+	public ProcessTaskVO updateProcessTask(@PathVariable("processId") String processId,
+			@PathVariable("taskId") Long taskId, @PathVariable("taskStatus") int taskStatus) {
+		try {
+			ProcessTaskVO obj = null;
+			obj = processTaskService.updateTaskStatus(processId, taskId, taskStatus);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
+
+	}
+
+	@PostMapping(value = "/saveProcessTask")
+	public Long saveProcessTask(@RequestBody ProcessTaskVO obj) {
+
+		return processTaskService.saveProcessTask(obj);
+	}
 
 }

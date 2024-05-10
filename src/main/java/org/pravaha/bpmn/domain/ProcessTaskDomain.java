@@ -1,17 +1,13 @@
 package org.pravaha.bpmn.domain;
 
-import java.util.Calendar;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.Data;
-//import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name = "TBL_PROCESS_TASK")
@@ -20,10 +16,8 @@ public class ProcessTaskDomain implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-//	@GeneratedValue(strategy = GenerationType.AUTO, generator = "task_seq")
-//	@SequenceGenerator(name = "task_seq", sequenceName = "SMX_BPO_TASK_SEQ")
 	@Column(name = "task_id")
-	private long task_id;
+	private long taskId;
 
 	@Column(name = "process_id")
 	private String processId;
@@ -32,10 +26,10 @@ public class ProcessTaskDomain implements java.io.Serializable {
 	private String taskName;
 
 	@Column(name = "Start_date")
-	private Calendar startDate;
+	private Date startDate;
 
 	@Column(name = "End_Date")
-	private Calendar endDate;
+	private Date endDate;
 
 	@Column(name = "Task_status")
 	private int taskStatus;
@@ -55,7 +49,7 @@ public class ProcessTaskDomain implements java.io.Serializable {
 
 	public String toString() {
 		StringBuffer strbuffer = new StringBuffer();
-		strbuffer.append("task_id -" + this.task_id).append("Parent Pid = " + this.parentPid)
+		strbuffer.append("task_id -" + this.taskId).append("Parent Pid = " + this.parentPid)
 				.append("Task Type = " + this.task_type).append("Description -" + this.description)
 				.append("Task Status" + this.taskStatus).append("Task Name" + this.taskName);
 		return strbuffer.toString();
