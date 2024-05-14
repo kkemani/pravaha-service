@@ -27,11 +27,11 @@ public class ProcessEventWatchDomain implements Serializable {
 	@Column(name="Correlation_id")
 	private String correlationId;
 	
-	@Column(name="relatedId")
+	@Column(name="RELATEDID")
 	private String relatedId;
 	
 	@Column(name="Process_id")
-	private String Pid;
+	private String processId;
 	
 	@Column(name="Create_date")
 	private Calendar createDate;
@@ -46,7 +46,7 @@ public class ProcessEventWatchDomain implements Serializable {
 	public String toString()
 	{
 		StringBuffer strBuffer= new StringBuffer();
-		strBuffer.append(this.id +" || " +this.Pid +" => "+" || "+this.correlationId+"||"+this.eventType+" || "+this.relatedId+"||"+this.status);
+		strBuffer.append(this.id +" || " +this.processId +" => "+" || "+this.correlationId+"||"+this.eventType+" || "+this.relatedId+"||"+this.status);
 		return strBuffer.toString();
 	}
 }

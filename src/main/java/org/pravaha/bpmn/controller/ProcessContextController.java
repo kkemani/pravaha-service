@@ -12,15 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/processcontext")
 public class ProcessContextController {
 	
-	@Autowired
-	ProcessContextService contextService;
-	
-	@GetMapping(value = "/getById/{id}") 
-	public ProcessContextDomain getProcessContextDomain (@PathVariable("id") String id) {
-		ProcessContextDomain contextDomain= new ProcessContextDomain();
-		System.out.println("In ProcessContextController ..........");
-		contextDomain = contextService.findById(id);
-		return contextDomain;
-	}
+
 
 }

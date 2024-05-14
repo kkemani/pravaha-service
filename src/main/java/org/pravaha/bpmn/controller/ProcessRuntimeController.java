@@ -5,10 +5,17 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.pravaha.bpmn.domain.ProcessDetailsDomain;
 import org.pravaha.bpmn.domain.ProcessTaskDomain;
+import org.pravaha.bpmn.model.ProcessContextVO;
+import org.pravaha.bpmn.model.ProcessDetailsVO;
+import org.pravaha.bpmn.model.ProcessEventWatchVO;
 import org.pravaha.bpmn.model.ProcessRuntimeSearchVO;
 import org.pravaha.bpmn.model.ProcessRuntimeVO;
 import org.pravaha.bpmn.model.ProcessTaskVO;
+import org.pravaha.bpmn.service.ProcessContextService;
+import org.pravaha.bpmn.service.ProcessDetailsService;
+import org.pravaha.bpmn.service.ProcessEventWatchService;
 import org.pravaha.bpmn.service.ProcessRunTimeService;
 import org.pravaha.bpmn.service.ProcessTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +35,16 @@ public class ProcessRuntimeController {
 
 	@Autowired
 	ProcessTaskService processTaskService;
+	
+	@Autowired
+	ProcessContextService contextService;
+	
+	@Autowired
+	public ProcessDetailsService detailsService;
+	
+	@Autowired
+	public ProcessEventWatchService eventWatchService;
+
 
 	@PostMapping("/savePRRunTime")
 	public ProcessRuntimeVO saveProcessRuntime(@RequestBody ProcessRuntimeVO prRunTimeVo) {
@@ -38,7 +55,7 @@ public class ProcessRuntimeController {
 	@GetMapping(value = "/get/{processId}")
 	public ProcessRuntimeVO getByProcessId(@PathVariable("processId") String processId) {
 		ProcessRuntimeVO prRunTimeVo = processRunTimeService.getProcessRuntime(processId);
-
+		System.out.println("In get ProcessRuntimeVO ........");
 		return prRunTimeVo;
 	}
 
@@ -89,11 +106,55 @@ public class ProcessRuntimeController {
 		return null;
 
 	}
-
-	@PostMapping(value = "/saveProcessTask")
-	public Long saveProcessTask(@RequestBody ProcessTaskVO obj) {
-
-		return processTaskService.saveProcessTask(obj);
+	
+	@GetMapping(value= {"/getProcessDetails/{processId}"})
+	public ProcessDetailsVO getProcessDetails(@PathVariable("processId") String processId) {
+		try {
+			return detailsService.getProcessDetails(processId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("Returning Null ......... ");
+		return null;
 	}
+	
+	@GetMapping(value= {"/getProcessContext/{processId}"})
+	public ProcessContextVO getProcessCOntext(@PathVariable("processId") String processId) {
+		try {
+			return contextService.getProcessContext(processId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("Returning Null .........in getProcessCOntext ");
+		return null;
+	}
+	
+	@GetMapping(value= {"/getProcessEventWatch/{processId}"})
+	public List<ProcessEventWatchVO> getProcessEventWatch(@PathVariable("processId") String processId) {
+		try {
+			return eventWatchService.getEventWatch(processId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("Returning Null ......... in getProcessEventWatch");
+		return null;
+	}
+	
+	@GetMapping(value= {"/getProcessTask/{processId}"})
+	public List<ProcessTaskVO> getProcessTask(@PathVariable("processId") String processId) {
+		try {
+			return processTaskService.getTaskByProcessId(processId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("Returning Null .........in getProcessTask ");
+		return null;
+	}
+
+//	@PostMapping(value = "/saveProcessTask")
+//	public Long saveProcessTask(@RequestBody ProcessTaskVO obj) {
+//
+//		return processTaskService.saveProcessTask(obj);
+//	}
 
 }

@@ -1,8 +1,9 @@
 package org.pravaha.bpmn.service;
 
-import java.util.Optional;
 
+import org.modelmapper.ModelMapper;
 import org.pravaha.bpmn.domain.ProcessContextDomain;
+import org.pravaha.bpmn.model.ProcessContextVO;
 import org.pravaha.bpmn.repository.ProcessContextRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,12 +13,18 @@ public class ProcessContextService {
 	
 	@Autowired
 	ProcessContextRepository contextRepository;
+	
+	@Autowired
+	private ModelMapper modelMapper;
 
-	public ProcessContextDomain findById(String id) {
-		Optional<ProcessContextDomain> contextDomain = null;
-		contextDomain = contextRepository.findById(id);
-		System.out.println("In ProcessContextService  "+contextDomain);
-		return contextDomain.get();
+	public ProcessContextVO getProcessContext(String id) {
+		
+		return convertDomaintoVO(contextRepository.findByProcessId(id));
+	}
+	
+	public ProcessContextVO convertDomaintoVO(ProcessContextDomain domain) {
+		ProcessContextVO pdvo = modelMapper.map(domain, ProcessContextVO.class);
+		return pdvo;
 	}
 
 }

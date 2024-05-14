@@ -17,7 +17,7 @@ public class ProcessContextDomain implements Serializable {
 
     @Id
     @Column(name = "Process_id")
-    private String Pid;
+    private String processId;
 
     @Column(name = "Process_context")
     private byte[] processContext;
@@ -35,7 +35,7 @@ public class ProcessContextDomain implements Serializable {
 	public String toString()
 	{
 		StringBuffer strBuffer= new StringBuffer();
-		strBuffer.append("Process Id = >"+this.Pid +"||"+this.processContext+" || "+this.createDate+" || "+this.lastUpdateDate );
+		strBuffer.append("Process Id = >"+this.processId +"||"+this.processContext+" || "+this.createDate+" || "+this.lastUpdateDate );
 		return strBuffer.toString();
 	}
 }

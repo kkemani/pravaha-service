@@ -1,5 +1,7 @@
 package org.pravaha.bpmn.repository;
 
+import java.util.List;
+
 import org.pravaha.bpmn.domain.ProcessTaskDomain;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -8,5 +10,7 @@ import org.springframework.stereotype.Repository;
 public interface ProcessTaskRepository extends JpaRepository<ProcessTaskDomain, Long>{
 	
 	public ProcessTaskDomain findByProcessIdAndTaskId(String processId, long taskId);
+	
+	public List<ProcessTaskDomain> findByProcessId(String processId);
 
 }
