@@ -1,10 +1,14 @@
 package org.pravaha.bpmn.service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
 import org.pravaha.bpmn.domain.ProcessEventWatchDomain;
+import org.pravaha.bpmn.domain.ProcessRuntimeDomain;
 import org.pravaha.bpmn.domain.ProcessTaskDomain;
 import org.pravaha.bpmn.model.ProcessEventWatchVO;
 import org.pravaha.bpmn.model.ProcessTaskVO;
@@ -21,9 +25,49 @@ public class ProcessEventWatchService {
 	@Autowired
 	private ModelMapper modelMapper;
 	
+	
+	// Save ProcessEventWatch
+	public ProcessEventWatchVO saveProcessEventWatch(ProcessEventWatchVO eventWatchVO) {
+		ProcessEventWatchDomain obj = null;
+		obj = convertVOtoDomain(eventWatchVO);
+		if(obj.getCreateDate() == null)
+			obj.setCreateDate(Calendar.getInstance().getTime());
+		
+		eventWatchRespository.save(obj);
+		return convertDomaintoVO(obj);
+	}
+	
+	
+	
+	//Get ProcessEventWatchVO List By Process Id
 	public List<ProcessEventWatchVO> getEventWatch(String processId) {
 		
 		return convertListDomaintoListVO(eventWatchRespository.findByProcessId(processId));
+	}
+	
+	//Get ProcessEventWatchVO list by correlationId 
+	public List<ProcessEventWatchVO> getEventWatchByCorrelationId(String correlationId) {
+		return convertListDomaintoListVO(eventWatchRespository.findByCorrelationId(correlationId));
+	}
+	
+	//Get ProcessEventWatchVO by correlationId and relatedId
+	public ProcessEventWatchVO getEventWatchByCorrelationIdAndRelatedId(String correlationId, String relatedId) {
+		return convertDomaintoVO(eventWatchRespository.findByCorrelationIdAndRelatedId(correlationId,relatedId));
+	}
+
+	// delete Process Event Watch By Id
+	public Long deleteEventWatch(Long id) {
+		Optional<ProcessEventWatchDomain> obj = eventWatchRespository.findById(id);
+		if(obj != null)
+			eventWatchRespository.delete(obj.get());
+		return id;
+	}
+	
+	
+	public ProcessEventWatchDomain convertVOtoDomain(ProcessEventWatchVO vo) {
+		ProcessEventWatchDomain pd = modelMapper.map(vo, ProcessEventWatchDomain.class);
+		return pd;
+
 	}
 	
 	public List<ProcessEventWatchVO> convertListDomaintoListVO(List<ProcessEventWatchDomain> domainList) {
@@ -42,6 +86,6 @@ public class ProcessEventWatchService {
 		ProcessEventWatchVO pdvo = modelMapper.map(domain, ProcessEventWatchVO.class);
 		return pdvo;
 	}
-
+	
 
 }

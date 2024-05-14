@@ -10,5 +10,8 @@ import org.springframework.stereotype.Repository;
 public interface ProcessEventWatchRespository extends JpaRepository<ProcessEventWatchDomain, Long>{
 	
 	public List<ProcessEventWatchDomain> findByProcessId(String processId);
+	public List<ProcessEventWatchDomain> findByCorrelationId(String correlationId);
+	public ProcessEventWatchDomain findByCorrelationIdAndRelatedId(String correlationId, String relatedId);
+	
 
 }

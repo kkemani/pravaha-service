@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/processruntime")
 public class ProcessRuntimeController {
+	
 
 	@Autowired
 	ProcessRunTimeService processRunTimeService;
@@ -55,7 +56,6 @@ public class ProcessRuntimeController {
 	@GetMapping(value = "/get/{processId}")
 	public ProcessRuntimeVO getByProcessId(@PathVariable("processId") String processId) {
 		ProcessRuntimeVO prRunTimeVo = processRunTimeService.getProcessRuntime(processId);
-		System.out.println("In get ProcessRuntimeVO ........");
 		return prRunTimeVo;
 	}
 
@@ -114,7 +114,6 @@ public class ProcessRuntimeController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("Returning Null ......... ");
 		return null;
 	}
 	
@@ -125,18 +124,6 @@ public class ProcessRuntimeController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("Returning Null .........in getProcessCOntext ");
-		return null;
-	}
-	
-	@GetMapping(value= {"/getProcessEventWatch/{processId}"})
-	public List<ProcessEventWatchVO> getProcessEventWatch(@PathVariable("processId") String processId) {
-		try {
-			return eventWatchService.getEventWatch(processId);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		System.out.println("Returning Null ......... in getProcessEventWatch");
 		return null;
 	}
 	
@@ -147,7 +134,6 @@ public class ProcessRuntimeController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("Returning Null .........in getProcessTask ");
 		return null;
 	}
 

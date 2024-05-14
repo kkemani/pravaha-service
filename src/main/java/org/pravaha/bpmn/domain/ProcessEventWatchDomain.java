@@ -2,6 +2,7 @@ package org.pravaha.bpmn.domain;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,7 +35,7 @@ public class ProcessEventWatchDomain implements Serializable {
 	private String processId;
 	
 	@Column(name="Create_date")
-	private Calendar createDate;
+	private Date createDate;
 	
 	@Column(name="status")
 	private int status;
