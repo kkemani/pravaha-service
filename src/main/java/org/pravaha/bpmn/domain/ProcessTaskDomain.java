@@ -16,31 +16,31 @@ public class ProcessTaskDomain implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name = "task_id")
+	@Column(name = "TASK_ID")
 	private long taskId;
 
-	@Column(name = "process_id")
+	@Column(name = "PROCESS_ID")
 	private String processId;
 
-	@Column(name = "Task_name")
+	@Column(name = "TASK_NAME")
 	private String taskName;
 
-	@Column(name = "Start_date")
+	@Column(name = "START_DATE")
 	private Date startDate;
 
-	@Column(name = "End_Date")
+	@Column(name = "END_DATE")
 	private Date endDate;
 
-	@Column(name = "Task_status")
+	@Column(name = "TASK_STATUS")
 	private int taskStatus;
 
-	@Column(name = "Parent_process_id")
+	@Column(name = "PARENT_PROCESS_ID")
 	private String parentPid;
 
-	@Column(name = "Task_type")
+	@Column(name = "TASK_TYPE")
 	private int task_type;
 
-	@Column(name = "Description")
+	@Column(name = "DESCRIPTION")
 	private String description;
 
 	public ProcessTaskDomain() {

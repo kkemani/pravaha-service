@@ -99,17 +99,17 @@ public class ProcessRunTimeService extends ProcessRuntimeDao {
 		return null;
 	}
 	
-	public List<ProcessRuntimeVO> convertListDomaintoListVO1(List<Object> domainList) {
-		List<ProcessRuntimeVO> voList = new ArrayList<ProcessRuntimeVO>();
-		for (Object oneDomain : domainList) {
-			voList.add(convertDomaintoVO(oneDomain));
-
-		}
-		if (!voList.isEmpty())
-			return voList;
-
-		return null;
-	}
+//	public List<ProcessRuntimeVO> convertListDomaintoListVO1(List<Object> domainList) {
+//		List<ProcessRuntimeVO> voList = new ArrayList<ProcessRuntimeVO>();
+//		for (Object oneDomain : domainList) {
+//			voList.add(convertDomaintoVO(oneDomain));
+//
+//		}
+//		if (!voList.isEmpty())
+//			return voList;
+//
+//		return null;
+//	}
 
 
 }

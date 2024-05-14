@@ -52,7 +52,7 @@ public class ProcessEventWatchController {
 		try {
 			return eventWatchService.deleteEventWatch(id);
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("No such Element for Id ...."+id);
 		}
 		return null;
 	}

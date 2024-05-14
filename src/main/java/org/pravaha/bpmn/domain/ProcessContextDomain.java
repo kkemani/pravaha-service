@@ -16,16 +16,16 @@ public class ProcessContextDomain implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @Column(name = "Process_id")
+    @Column(name = "PROCESS_ID")
     private String processId;
 
-    @Column(name = "Process_context")
+    @Column(name = "PROCESS_CONTEXT")
     private byte[] processContext;
 
-    @Column(name = "Create_Date")
+    @Column(name = "CREATE_DATE")
     private Calendar createDate;
 
-    @Column(name = "Last_update_date")
+    @Column(name = "LAST_UPDATE_DATE")
     private Calendar lastUpdateDate;
     
     public ProcessContextDomain() {

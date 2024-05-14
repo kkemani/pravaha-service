@@ -19,25 +19,25 @@ public class ProcessEventWatchDomain implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column (name="Id")
+	@Column (name="ID")
 	private long id;
 	
-	@Column (name="Event_type")
+	@Column (name="EVENT_TYPE")
 	private String eventType;
 	
-	@Column(name="Correlation_id")
+	@Column(name="CORRELATION_ID")
 	private String correlationId;
 	
 	@Column(name="RELATEDID")
 	private String relatedId;
 	
-	@Column(name="Process_id")
+	@Column(name="PROCESS_ID")
 	private String processId;
 	
-	@Column(name="Create_date")
+	@Column(name="CREATE_DATE")
 	private Date createDate;
 	
-	@Column(name="status")
+	@Column(name="STATUS")
 	private int status;
 	
 	public ProcessEventWatchDomain() {

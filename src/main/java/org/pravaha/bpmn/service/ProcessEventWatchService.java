@@ -58,8 +58,7 @@ public class ProcessEventWatchService {
 	// delete Process Event Watch By Id
 	public Long deleteEventWatch(Long id) {
 		Optional<ProcessEventWatchDomain> obj = eventWatchRespository.findById(id);
-		if(obj != null)
-			eventWatchRespository.delete(obj.get());
+		eventWatchRespository.delete(obj.get());
 		return id;
 	}
 	

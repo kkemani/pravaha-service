@@ -51,7 +51,6 @@ public class ProcessTaskService {
 	}
 	
 	public List<ProcessTaskVO> getTaskByProcessId(String processId) {
-		System.out.println("getTaskByProcessId service ------");
 		return convertListDomaintoListVO(processTaskRepository.findByProcessId(processId));
 		
 	}
