@@ -87,10 +87,8 @@ public class ProcessRunTimeService extends ProcessRuntimeDao {
 				resultMap.put("Failed", Integer.parseInt(oneMap.get("count").toString()));
 			}
 			int total = inProgressCount+completedCount+failedCount;
-			System.out.println("Total Executed ===>  "+total);
 			resultMap.put("Executed", total);
 		}
-		System.out.println(resultMap);
 		if (resultMap != null)
 			return resultMap;
 
