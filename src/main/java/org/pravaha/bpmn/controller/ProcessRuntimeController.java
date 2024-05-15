@@ -29,23 +29,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/processruntime")
 public class ProcessRuntimeController {
-	
 
 	@Autowired
 	ProcessRunTimeService processRunTimeService;
 
 	@Autowired
 	ProcessTaskService processTaskService;
-	
+
 	@Autowired
 	ProcessContextService contextService;
-	
+
 	@Autowired
 	public ProcessDetailsService detailsService;
-	
+
 	@Autowired
 	public ProcessEventWatchService eventWatchService;
-
 
 	@PostMapping("/savePRRunTime")
 	public ProcessRuntimeVO saveProcessRuntime(@RequestBody ProcessRuntimeVO prRunTimeVo) {
@@ -75,13 +73,10 @@ public class ProcessRuntimeController {
 	}
 
 	@GetMapping(value = "/getTodaysStatus")
-	public List<Map<String, Object>> getTodaysStatus() {
+	public Map<String, Integer> getTodaysStatus() {
 		try {
-			List<Map<String, Object>> voList = processRunTimeService.todaysRecord();
-			if (voList != null)
-				return voList;
-			else
-				return null;
+			Map<String, Integer> map = processRunTimeService.todaysRecord();
+			return map;
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -106,8 +101,8 @@ public class ProcessRuntimeController {
 		return null;
 
 	}
-	
-	@GetMapping(value= {"/getProcessDetails/{processId}"})
+
+	@GetMapping(value = { "/getProcessDetails/{processId}" })
 	public ProcessDetailsVO getProcessDetails(@PathVariable("processId") String processId) {
 		try {
 			return detailsService.getProcessDetails(processId);
@@ -116,8 +111,8 @@ public class ProcessRuntimeController {
 		}
 		return null;
 	}
-	
-	@GetMapping(value= {"/getProcessContext/{processId}"})
+
+	@GetMapping(value = { "/getProcessContext/{processId}" })
 	public ProcessContextVO getProcessCOntext(@PathVariable("processId") String processId) {
 		try {
 			return contextService.getProcessContext(processId);
@@ -126,8 +121,8 @@ public class ProcessRuntimeController {
 		}
 		return null;
 	}
-	
-	@GetMapping(value= {"/getProcessTask/{processId}"})
+
+	@GetMapping(value = { "/getProcessTask/{processId}" })
 	public List<ProcessTaskVO> getProcessTask(@PathVariable("processId") String processId) {
 		try {
 			return processTaskService.getTaskByProcessId(processId);

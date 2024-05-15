@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
@@ -49,7 +50,7 @@ public class ProcessRunTimeService extends ProcessRuntimeDao {
 
 		return null;
 	}
-	
+
 	public List<ProcessRuntimeVO> getPrRuntimeByBusinessKey(String businessKey) {
 		List<ProcessRuntimeDomain> obj = processRuntimeRepository.findByBusinessKey(businessKey);
 		if (obj != null)
@@ -58,7 +59,7 @@ public class ProcessRunTimeService extends ProcessRuntimeDao {
 		return null;
 	}
 
-	public List<ProcessRuntimeVO> getProcessRuntimeByDateBetween(Date startDate, Date endDate) {		
+	public List<ProcessRuntimeVO> getProcessRuntimeByDateBetween(Date startDate, Date endDate) {
 		List<ProcessRuntimeDomain> procRTList = processRuntimeRepository.findByStartDateBetween(startDate, endDate);
 		if (procRTList != null) {
 			return convertListDomaintoListVO(procRTList);
@@ -66,14 +67,35 @@ public class ProcessRunTimeService extends ProcessRuntimeDao {
 		return null;
 	}
 
-	public List<Map<String,Object>> todaysRecord() throws java.text.ParseException {
+	public Map<String, Integer> todaysRecord() throws java.text.ParseException {
 		Date date = LocalDateTimeUtil.getTodaysDate();
-		List<Map<String,Object>> mapList = processRuntimeRepository.getStatusCountForToday(date);
-		if(mapList !=null)
-			return mapList;
+		List<Map<String, Object>> mapList = processRuntimeRepository.getStatusCountForToday(date);
+		Map<String, Integer> resultMap = new HashMap<String, Integer>();
+		int inProgressCount = 0;
+		int completedCount = 0;
+		int failedCount = 0;
+		for (Map<String, Object> oneMap : mapList) {
+			String status = oneMap.get("status").toString();
+			if (status.equals("1")) {
+				inProgressCount = Integer.parseInt(oneMap.get("count").toString());
+				resultMap.put("In-Progress", Integer.parseInt(oneMap.get("count").toString()));
+			} else if (status.equals("2")) {
+				completedCount = Integer.parseInt(oneMap.get("count").toString());
+				resultMap.put("Completed", Integer.parseInt(oneMap.get("count").toString()));
+			} else if (status.equals("3")) {
+				failedCount = Integer.parseInt(oneMap.get("count").toString());
+				resultMap.put("Failed", Integer.parseInt(oneMap.get("count").toString()));
+			}
+			int total = inProgressCount+completedCount+failedCount;
+			System.out.println("Total Executed ===>  "+total);
+			resultMap.put("Executed", total);
+		}
+		System.out.println(resultMap);
+		if (resultMap != null)
+			return resultMap;
+
 		return null;
 	}
-
 
 	public ProcessRuntimeDomain convertVOtoDomain(Object vo) {
 		ProcessRuntimeDomain pd = modelMapper.map(vo, ProcessRuntimeDomain.class);
@@ -98,7 +120,7 @@ public class ProcessRunTimeService extends ProcessRuntimeDao {
 
 		return null;
 	}
-	
+
 //	public List<ProcessRuntimeVO> convertListDomaintoListVO1(List<Object> domainList) {
 //		List<ProcessRuntimeVO> voList = new ArrayList<ProcessRuntimeVO>();
 //		for (Object oneDomain : domainList) {
@@ -110,6 +132,5 @@ public class ProcessRunTimeService extends ProcessRuntimeDao {
 //
 //		return null;
 //	}
-
 
 }

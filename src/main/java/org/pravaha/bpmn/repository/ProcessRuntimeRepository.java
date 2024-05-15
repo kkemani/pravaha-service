@@ -17,7 +17,8 @@ public interface ProcessRuntimeRepository extends JpaRepository<ProcessRuntimeDo
 	public List<ProcessRuntimeDomain> findByStartDateBetween(Date startDate, Date endDate);
 
 	
-	@Query(value = "SELECT status, COUNT(*) as COUNT FROM TBL_PROCESS_RUNTIME WHERE TRUNC(START_DATE) = TRUNC(:today) GROUP BY status", nativeQuery = true)
+	@Query(value = "SELECT status as status, COUNT(*) as count FROM TBL_PROCESS_RUNTIME WHERE TRUNC(START_DATE) = TRUNC(:today) GROUP BY status", nativeQuery = true)
 	public List<Map<String,Object>> getStatusCountForToday(Date today);
+	
 	
 }
