@@ -14,6 +14,7 @@ import java.text.*;
 
 import org.modelmapper.ModelMapper;
 import org.pravaha.bpmn.dataaccess.ProcessRuntimeDao;
+import org.pravaha.bpmn.defines.ProcessRunTimeEnum;
 import org.pravaha.bpmn.domain.ProcessRuntimeDomain;
 import org.pravaha.bpmn.model.ProcessRuntimeVO;
 import org.pravaha.bpmn.repository.ProcessRuntimeRepository;
@@ -76,22 +77,54 @@ public class ProcessRunTimeService extends ProcessRuntimeDao {
 		int failedCount = 0;
 		for (Map<String, Object> oneMap : mapList) {
 			String status = oneMap.get("status").toString();
-			if (status.equals("1")) {
+			if (status.equals(ProcessRunTimeEnum.IN_PROGRESS_INT.getValue())) {
 				inProgressCount = Integer.parseInt(oneMap.get("count").toString());
-				resultMap.put("In-Progress", Integer.parseInt(oneMap.get("count").toString()));
-			} else if (status.equals("2")) {
+				resultMap.put("InProgress", Integer.parseInt(oneMap.get("count").toString()));
+			} else if (status.equals(ProcessRunTimeEnum.COMPLETED_INT.getValue())) {
 				completedCount = Integer.parseInt(oneMap.get("count").toString());
 				resultMap.put("Completed", Integer.parseInt(oneMap.get("count").toString()));
-			} else if (status.equals("3")) {
+			} else if (status.equals(ProcessRunTimeEnum.FAILED_INT.getValue())) {
 				failedCount = Integer.parseInt(oneMap.get("count").toString());
 				resultMap.put("Failed", Integer.parseInt(oneMap.get("count").toString()));
 			}
-			int total = inProgressCount+completedCount+failedCount;
+			int total = inProgressCount + completedCount + failedCount;
 			resultMap.put("Executed", total);
 		}
 		if (resultMap != null)
 			return resultMap;
 
+		return null;
+	}
+
+	public List<ProcessRuntimeVO> todaysRecordListByStatus(Date startDate, Date endDate, String status) {
+		status = getStringStatusValue(status);
+		int statusInt = Integer.parseInt(status);
+		List<ProcessRuntimeDomain> domainList = processRuntimeRepository.findByStartDateBetween(startDate, endDate);
+		List<ProcessRuntimeDomain> resultList = new ArrayList<ProcessRuntimeDomain>();
+		for (ProcessRuntimeDomain oneDomain : domainList) {
+			if (statusInt == oneDomain.getStatus()) {
+				resultList.add(oneDomain);
+			}
+		}
+		if (resultList.isEmpty() && status.equals(ProcessRunTimeEnum.TOTAL_EXECUTED_INT.getValue()))
+			return convertListDomaintoListVO(domainList);
+
+		return convertListDomaintoListVO(resultList);
+
+	}
+
+	private String getStringStatusValue(String status) {
+		switch (status.toLowerCase()) {
+		case "inprogress":
+			return ProcessRunTimeEnum.IN_PROGRESS_INT.getValue();
+		case "completed":
+			return ProcessRunTimeEnum.COMPLETED_INT.getValue();
+		case "failed":
+			return ProcessRunTimeEnum.FAILED_INT.getValue();
+		case "executed":
+			return ProcessRunTimeEnum.TOTAL_EXECUTED_INT.getValue();
+
+		}
 		return null;
 	}
 

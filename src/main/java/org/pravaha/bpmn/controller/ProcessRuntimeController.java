@@ -83,6 +83,12 @@ public class ProcessRuntimeController {
 		return null;
 	}
 
+	@PostMapping(value = "/getTodaysRecordByStatus")
+	public List<ProcessRuntimeVO> getTodaysRecordByStatus(@RequestBody ProcessRuntimeSearchVO processRuntimeSearchVO) {
+		return processRunTimeService.todaysRecordListByStatus(processRuntimeSearchVO.getStartDate(),
+				processRuntimeSearchVO.getEndDate(), processRuntimeSearchVO.getStatus());
+	}
+
 	@GetMapping(value = "/getTask/{processId}/{taskId}")
 	public ProcessTaskVO getTask(@PathVariable("processId") String processId, @PathVariable("taskId") Long taskId) {
 		return processTaskService.getTask(processId, taskId);
