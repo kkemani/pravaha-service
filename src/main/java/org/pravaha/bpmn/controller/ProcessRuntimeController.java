@@ -83,7 +83,7 @@ public class ProcessRuntimeController {
 		return null;
 	}
 
-	@PostMapping(value = "/getTodaysRecordByStatus")
+	@PostMapping(value = "/getRecordsByDateAndStatus")
 	public List<ProcessRuntimeVO> getTodaysRecordByStatus(@RequestBody ProcessRuntimeSearchVO processRuntimeSearchVO) {
 		return processRunTimeService.todaysRecordListByStatus(processRuntimeSearchVO.getStartDate(),
 				processRuntimeSearchVO.getEndDate(), processRuntimeSearchVO.getStatus());
