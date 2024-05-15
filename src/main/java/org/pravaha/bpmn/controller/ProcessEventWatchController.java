@@ -5,6 +5,7 @@ import java.util.List;
 import org.pravaha.bpmn.model.ProcessEventWatchVO;
 import org.pravaha.bpmn.service.ProcessEventWatchService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,7 +48,7 @@ public class ProcessEventWatchController {
 		return null;
 	}
 
-	@GetMapping(value = { "/delProcEveById/{id}" })
+	@DeleteMapping(value = { "/delProcEveById/{id}" })
 	public Long delProcessEventWatch(@PathVariable("id") Long id) {
 		try {
 			return eventWatchService.deleteEventWatch(id);
