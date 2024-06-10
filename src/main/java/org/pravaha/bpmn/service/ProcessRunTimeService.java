@@ -1,16 +1,12 @@
 package org.pravaha.bpmn.service;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TimeZone;
 import java.util.UUID;
-import java.text.*;
 
 import org.modelmapper.ModelMapper;
 import org.pravaha.bpmn.dataaccess.ProcessRuntimeDao;
@@ -20,7 +16,6 @@ import org.pravaha.bpmn.model.ProcessRuntimeVO;
 import org.pravaha.bpmn.repository.ProcessRuntimeRepository;
 import org.pravaha.bpmn.util.LocalDateTimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.expression.ParseException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -34,12 +29,14 @@ public class ProcessRunTimeService extends ProcessRuntimeDao {
 
 	public ProcessRuntimeVO saveProcessRuntime(ProcessRuntimeVO processRuntimeVO) {
 		ProcessRuntimeDomain obj = null;
+		System.out.println("process run time is : "+processRuntimeVO.toString());
 		// convert from PRVO to PRRuntimeDomain
 		obj = convertVOtoDomain(processRuntimeVO);
 		if (obj.getStartDate() == null)
 			obj.setStartDate(Calendar.getInstance().getTime());
 		if (obj.getLastUpdateDate() == null)
 			obj.setLastUpdateDate(Calendar.getInstance().getTime());
+		System.out.println("********** =====>>>> "+obj.getProcessName());
 		obj = processRuntimeRepository.save(obj);
 		return convertDomaintoVO(obj);
 	}
@@ -76,19 +73,19 @@ public class ProcessRunTimeService extends ProcessRuntimeDao {
 		int completedCount = 0;
 		int failedCount = 0;
 		for (Map<String, Object> oneMap : mapList) {
-			String status = oneMap.get("status").toString();
+			String status = oneMap.get(ProcessRunTimeEnum.STATUS.getValue()).toString();
 			if (status.equals(ProcessRunTimeEnum.IN_PROGRESS_INT.getValue())) {
-				inProgressCount = Integer.parseInt(oneMap.get("count").toString());
-				resultMap.put("InProgress", Integer.parseInt(oneMap.get("count").toString()));
+				inProgressCount = Integer.parseInt(oneMap.get(ProcessRunTimeEnum.COUNT.getValue()).toString());
+				resultMap.put(ProcessRunTimeEnum.IN_PROGRESS_STRING.getValue(), inProgressCount);
 			} else if (status.equals(ProcessRunTimeEnum.COMPLETED_INT.getValue())) {
-				completedCount = Integer.parseInt(oneMap.get("count").toString());
-				resultMap.put("Completed", Integer.parseInt(oneMap.get("count").toString()));
+				completedCount = Integer.parseInt(oneMap.get(ProcessRunTimeEnum.COUNT.getValue()).toString());
+				resultMap.put(ProcessRunTimeEnum.COMPLETED_STRING.getValue(), completedCount);
 			} else if (status.equals(ProcessRunTimeEnum.FAILED_INT.getValue())) {
-				failedCount = Integer.parseInt(oneMap.get("count").toString());
-				resultMap.put("Failed", Integer.parseInt(oneMap.get("count").toString()));
+				failedCount = Integer.parseInt(oneMap.get(ProcessRunTimeEnum.COUNT.getValue()).toString());
+				resultMap.put(ProcessRunTimeEnum.FAILED_STRING.getValue(), failedCount);
 			}
 			int total = inProgressCount + completedCount + failedCount;
-			resultMap.put("Executed", total);
+			resultMap.put(ProcessRunTimeEnum.TOTAL_EXECUTED_STRING.getValue(), total);
 		}
 		if (resultMap != null)
 			return resultMap;
@@ -130,7 +127,9 @@ public class ProcessRunTimeService extends ProcessRuntimeDao {
 
 	public ProcessRuntimeDomain convertVOtoDomain(Object vo) {
 		ProcessRuntimeDomain pd = modelMapper.map(vo, ProcessRuntimeDomain.class);
-		pd.setProcessId(UUID.randomUUID().toString());
+		String processId = UUID.randomUUID().toString();
+		System.out.println("Process id is : "+processId);
+		pd.setProcessId(processId);
 		return pd;
 
 	}
@@ -152,16 +151,6 @@ public class ProcessRunTimeService extends ProcessRuntimeDao {
 		return null;
 	}
 
-//	public List<ProcessRuntimeVO> convertListDomaintoListVO1(List<Object> domainList) {
-//		List<ProcessRuntimeVO> voList = new ArrayList<ProcessRuntimeVO>();
-//		for (Object oneDomain : domainList) {
-//			voList.add(convertDomaintoVO(oneDomain));
-//
-//		}
-//		if (!voList.isEmpty())
-//			return voList;
-//
-//		return null;
-//	}
+
 
 }

@@ -38,7 +38,7 @@ public class ProcessTaskDomain implements java.io.Serializable {
 	private String parentPid;
 
 	@Column(name = "TASK_TYPE")
-	private int task_type;
+	private int taskType;
 
 	@Column(name = "DESCRIPTION")
 	private String description;
@@ -50,7 +50,7 @@ public class ProcessTaskDomain implements java.io.Serializable {
 	public String toString() {
 		StringBuffer strbuffer = new StringBuffer();
 		strbuffer.append("task_id -" + this.taskId).append("Parent Pid = " + this.parentPid)
-				.append("Task Type = " + this.task_type).append("Description -" + this.description)
+				.append("Task Type = " + this.taskType).append("Description -" + this.description)
 				.append("Task Status" + this.taskStatus).append("Task Name" + this.taskName);
 		return strbuffer.toString();
 	}

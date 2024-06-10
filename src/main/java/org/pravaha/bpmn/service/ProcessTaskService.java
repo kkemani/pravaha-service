@@ -59,6 +59,14 @@ public class ProcessTaskService {
 		return pdvo;
 	}
 	
+	public ProcessTaskDomain convertVOtoDomain(Object vo) {
+		ProcessTaskDomain pddomain = modelMapper.map(vo, ProcessTaskDomain.class);
+		long taskId = (long)UUID.randomUUID().getLeastSignificantBits();
+		System.out.println("Task id is : "+taskId);
+		pddomain.setTaskId(taskId);
+		return pddomain;
+	}
+	
 	public List<ProcessTaskVO> convertListDomaintoListVO(List<ProcessTaskDomain> domainList) {
 		List<ProcessTaskVO> voList = new ArrayList<ProcessTaskVO>();
 		for (ProcessTaskDomain oneDomain : domainList) {
@@ -76,11 +84,10 @@ public class ProcessTaskService {
 		return pdvo;
 	}
 	
-//	public Long saveProcessTask(ProcessTaskVO processTaskVo) {
-//		ProcessTaskDomain obj = convertVOtoDomain(processTaskVo);
-//		if (obj.getStartDate() == null)
-//			obj.setStartDate(Calendar.getInstance().getTime());
-//		obj = processTaskRepository.save(obj);
-//		return new Long(1);
-//	}
+	public void saveProcessTask(ProcessTaskVO processTaskVo) {
+		ProcessTaskDomain obj = convertVOtoDomain(processTaskVo);
+		if (obj.getStartDate() == null)
+			obj.setStartDate(Calendar.getInstance().getTime());
+		processTaskRepository.save(obj);
+	}
 }

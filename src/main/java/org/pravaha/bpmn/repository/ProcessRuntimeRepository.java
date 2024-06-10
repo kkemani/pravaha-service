@@ -20,7 +20,4 @@ public interface ProcessRuntimeRepository extends JpaRepository<ProcessRuntimeDo
 	@Query(value = "SELECT status as status, COUNT(*) as count FROM TBL_PROCESS_RUNTIME WHERE TRUNC(START_DATE) = TRUNC(:today) GROUP BY status", nativeQuery = true)
 	public List<Map<String,Object>> getStatusCountForToday(Date today);
 	
-	@Query(value = "SELECT * FROM TBL_PROCESS_RUNTIME WHERE TRUNC(START_DATE) = TRUNC(:today)", nativeQuery = true)
-	public List<ProcessRuntimeDomain> getTodaysRecordList(Date today);
-	
 }
