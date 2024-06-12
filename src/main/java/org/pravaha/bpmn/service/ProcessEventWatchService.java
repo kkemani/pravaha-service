@@ -65,6 +65,8 @@ public class ProcessEventWatchService {
 	
 	public ProcessEventWatchDomain convertVOtoDomain(ProcessEventWatchVO vo) {
 		ProcessEventWatchDomain pd = modelMapper.map(vo, ProcessEventWatchDomain.class);
+		long id = (long)UUID.randomUUID().getLeastSignificantBits();
+		pd.setId(id);
 		return pd;
 
 	}

@@ -36,7 +36,6 @@ public class ProcessRunTimeService extends ProcessRuntimeDao {
 			obj.setStartDate(Calendar.getInstance().getTime());
 		if (obj.getLastUpdateDate() == null)
 			obj.setLastUpdateDate(Calendar.getInstance().getTime());
-		System.out.println("********** =====>>>> "+obj.getProcessName());
 		obj = processRuntimeRepository.save(obj);
 		return convertDomaintoVO(obj);
 	}
@@ -130,6 +129,8 @@ public class ProcessRunTimeService extends ProcessRuntimeDao {
 		String processId = UUID.randomUUID().toString();
 		System.out.println("Process id is : "+processId);
 		pd.setProcessId(processId);
+		String businessKey = UUID.randomUUID().toString();
+		pd.setBusinessKey(businessKey);
 		return pd;
 
 	}

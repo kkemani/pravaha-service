@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Date;
 
 @Entity
 @Table(name = "Tbl_process_context")
@@ -23,10 +24,10 @@ public class ProcessContextDomain implements Serializable {
     private byte[] processContext;
 
     @Column(name = "CREATE_DATE")
-    private Calendar createDate;
+    private Date createDate;
 
     @Column(name = "LAST_UPDATE_DATE")
-    private Calendar lastUpdateDate;
+    private Date lastUpdateDate;
     
     public ProcessContextDomain() {
     	
