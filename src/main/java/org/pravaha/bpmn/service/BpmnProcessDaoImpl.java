@@ -3,6 +3,7 @@ package org.pravaha.bpmn.service;
 import java.text.ParseException;
 import org.pravaha.bpmn.dataaccess.BpmnProcessDao;
 import org.pravaha.bpmn.model.ProcessContextVO;
+import org.pravaha.bpmn.model.ProcessDefinitionVO;
 import org.pravaha.bpmn.model.ProcessEventWatchVO;
 import org.pravaha.bpmn.model.ProcessRuntimeVO;
 import org.pravaha.bpmn.model.ProcessTaskVO;
@@ -23,6 +24,9 @@ public class BpmnProcessDaoImpl implements BpmnProcessDao {
 	
 	@Autowired
 	ProcessContextService contextservice;
+	
+	@Autowired
+	ProcessDefinitionService definitionService;
 
 	@Override
 	public ProcessRuntimeVO saveProcessRuntime(ProcessRuntimeVO processRuntimeVO) {
@@ -76,6 +80,17 @@ public class BpmnProcessDaoImpl implements BpmnProcessDao {
 		contextservice.saveProcessContext(vo);
 		return null;
 	}
-	
+
+	@Override
+	public ProcessDefinitionVO saveProcessDefintion(ProcessDefinitionVO definitionVO) {
+		// TODO Auto-generated method stub
+		return definitionService.saveProcessDef(definitionVO);
+	}
+
+	@Override
+	public ProcessDefinitionVO getProcessDefinition(String processName) {
+		// TODO Auto-generated method stub
+		return definitionService.getProcessDef(processName);
+	}
 
 }

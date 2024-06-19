@@ -29,7 +29,6 @@ public class ProcessRunTimeService extends ProcessRuntimeDao {
 
 	public ProcessRuntimeVO saveProcessRuntime(ProcessRuntimeVO processRuntimeVO) {
 		ProcessRuntimeDomain obj = null;
-		System.out.println("process run time is : "+processRuntimeVO.toString());
 		// convert from PRVO to PRRuntimeDomain
 		obj = convertVOtoDomain(processRuntimeVO);
 		if (obj.getStartDate() == null)
@@ -127,7 +126,6 @@ public class ProcessRunTimeService extends ProcessRuntimeDao {
 	public ProcessRuntimeDomain convertVOtoDomain(Object vo) {
 		ProcessRuntimeDomain pd = modelMapper.map(vo, ProcessRuntimeDomain.class);
 		String processId = UUID.randomUUID().toString();
-		System.out.println("Process id is : "+processId);
 		pd.setProcessId(processId);
 		String businessKey = UUID.randomUUID().toString();
 		pd.setBusinessKey(businessKey);

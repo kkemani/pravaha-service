@@ -62,7 +62,6 @@ public class ProcessTaskService {
 	public ProcessTaskDomain convertVOtoDomain(Object vo) {
 		ProcessTaskDomain pddomain = modelMapper.map(vo, ProcessTaskDomain.class);
 		long taskId = (long)UUID.randomUUID().getLeastSignificantBits();
-		System.out.println("Task id is : "+taskId);
 		pddomain.setTaskId(taskId);
 		return pddomain;
 	}

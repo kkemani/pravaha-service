@@ -17,7 +17,6 @@ public class BpmnProcessService {
 	BpmnProcessDaoImpl bpmnProcessDaoImpl;
 	
 	public void startProcess(BpmnProcessStartVO processStartVo) {
-		System.out.println("File name ::: "+processStartVo.getFileName());
 		BpmnProcessRuntime bpmnRun = new BpmnProcessRuntime(processStartVo.getFileName());
 		List<BpmnProcessVariable> varList = processStartVo.getProcessVariableList();
 		Hashtable<String, Object> map = new Hashtable<String, Object>();
@@ -29,8 +28,6 @@ public class BpmnProcessService {
 		
 		if (varList != null && !varList.isEmpty()) {
 		    for(BpmnProcessVariable oneVariable : varList) {
-		    	System.out.println("Name : "+oneVariable.getName());
-		    	System.out.println("getVariable : "+oneVariable.getVariable());
 		    	map.put(oneVariable.getName(), oneVariable.getVariable());
 
 		    }
