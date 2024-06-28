@@ -26,23 +26,23 @@ public class BpmnProcessService {
 		    	);
 		}
 		
-		if (varList != null && !varList.isEmpty()) {
-		    for(BpmnProcessVariable oneVariable : varList) {
-		    	map.put(oneVariable.getName(), oneVariable.getVariable());
-
-		    }
-		}
-		
 		bpmnRun.setVariables(map);
+		bpmnRun.setBpmnProcessDao(bpmnProcessDaoImpl);
 		System.out.println("before starting");
 		try {
-			bpmnRun.setBpmnProcessDao(bpmnProcessDaoImpl);
+//			bpmnRun.setBpmnProcessDao(bpmnProcessDaoImpl);
 			bpmnRun.startProcess();
 			System.out.println("after starting");
 		
 		} catch (BpmnException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void resumeProcess(String eventType, String correlationId) {
+		BpmnProcessRuntime bpmnRun = new BpmnProcessRuntime(eventType,correlationId,bpmnProcessDaoImpl);
+		
+		
 	}
 	
 }

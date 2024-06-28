@@ -93,4 +93,16 @@ public class BpmnProcessDaoImpl implements BpmnProcessDao {
 		return definitionService.getProcessDef(processName);
 	}
 
+	@Override
+	public ProcessEventWatchVO getEventByEventTypeAndCorrId(String eventType, String correlationId) {
+		// TODO Auto-generated method stub
+		return eventWatchService.getEventByEventTypeAndCorrId(eventType, correlationId);
+	}
+
+	@Override
+	public ProcessContextVO getProcessContextByPId(String processId) {
+		// TODO Auto-generated method stub
+		return contextservice.getProcessContext(processId);
+	}
+
 }

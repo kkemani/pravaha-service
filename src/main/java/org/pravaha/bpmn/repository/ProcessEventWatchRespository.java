@@ -12,6 +12,7 @@ public interface ProcessEventWatchRespository extends JpaRepository<ProcessEvent
 	public List<ProcessEventWatchDomain> findByProcessId(String processId);
 	public List<ProcessEventWatchDomain> findByCorrelationId(String correlationId);
 	public ProcessEventWatchDomain findByCorrelationIdAndRelatedId(String correlationId, String relatedId);
+	public ProcessEventWatchDomain findByEventTypeAndCorrelationId(String eventType, String correlationId);
 	
 
 }

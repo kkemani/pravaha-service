@@ -18,59 +18,69 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ProcessEventWatchService {
-	
+
 	@Autowired
 	public ProcessEventWatchRespository eventWatchRespository;
-	
+
 	@Autowired
 	private ModelMapper modelMapper;
-	
-	
+
 	// Save ProcessEventWatch
 	public ProcessEventWatchVO saveProcessEventWatch(ProcessEventWatchVO eventWatchVO) {
 		ProcessEventWatchDomain obj = null;
 		obj = convertVOtoDomain(eventWatchVO);
-		if(obj.getCreateDate() == null)
+		if (obj.getCreateDate() == null)
 			obj.setCreateDate(Calendar.getInstance().getTime());
-		
+
 		eventWatchRespository.save(obj);
 		return convertDomaintoVO(obj);
 	}
-	
-	
-	
-	//Get ProcessEventWatchVO List By Process Id
+
+	// getVOByEventTypeAndCorrelationId
+	public ProcessEventWatchVO getEventByEventTypeAndCorrId(String eventType, String correlationId) {
+		ProcessEventWatchDomain domain = eventWatchRespository.findByEventTypeAndCorrelationId(eventType,
+				correlationId);
+		if (domain != null) {
+			eventWatchRespository.delete(domain);
+			return convertDomaintoVO(domain);
+		} else
+			return null;
+	}
+
+	// Get ProcessEventWatchVO List By Process Id
 	public List<ProcessEventWatchVO> getEventWatch(String processId) {
-		
+
 		return convertListDomaintoListVO(eventWatchRespository.findByProcessId(processId));
 	}
-	
-	//Get ProcessEventWatchVO list by correlationId 
+
+	// Get ProcessEventWatchVO list by correlationId
 	public List<ProcessEventWatchVO> getEventWatchByCorrelationId(String correlationId) {
 		return convertListDomaintoListVO(eventWatchRespository.findByCorrelationId(correlationId));
 	}
-	
-	//Get ProcessEventWatchVO by correlationId and relatedId
+
+	// Get ProcessEventWatchVO by correlationId and relatedId
 	public ProcessEventWatchVO getEventWatchByCorrelationIdAndRelatedId(String correlationId, String relatedId) {
-		return convertDomaintoVO(eventWatchRespository.findByCorrelationIdAndRelatedId(correlationId,relatedId));
+		return convertDomaintoVO(eventWatchRespository.findByCorrelationIdAndRelatedId(correlationId, relatedId));
 	}
 
 	// delete Process Event Watch By Id
 	public Long deleteEventWatch(Long id) {
 		Optional<ProcessEventWatchDomain> obj = eventWatchRespository.findById(id);
-		eventWatchRespository.delete(obj.get());
-		return id;
+		if (obj != null) {
+			eventWatchRespository.delete(obj.get());
+			return id;
+		} else
+			return null;
 	}
-	
-	
+
 	public ProcessEventWatchDomain convertVOtoDomain(ProcessEventWatchVO vo) {
 		ProcessEventWatchDomain pd = modelMapper.map(vo, ProcessEventWatchDomain.class);
-		long id = (long)UUID.randomUUID().getLeastSignificantBits();
+		long id = (long) UUID.randomUUID().getLeastSignificantBits();
 		pd.setId(id);
 		return pd;
 
 	}
-	
+
 	public List<ProcessEventWatchVO> convertListDomaintoListVO(List<ProcessEventWatchDomain> domainList) {
 		List<ProcessEventWatchVO> voList = new ArrayList<ProcessEventWatchVO>();
 		for (ProcessEventWatchDomain oneDomain : domainList) {
@@ -82,11 +92,10 @@ public class ProcessEventWatchService {
 
 		return null;
 	}
-	
+
 	public ProcessEventWatchVO convertDomaintoVO(ProcessEventWatchDomain domain) {
 		ProcessEventWatchVO pdvo = modelMapper.map(domain, ProcessEventWatchVO.class);
 		return pdvo;
 	}
-	
 
 }

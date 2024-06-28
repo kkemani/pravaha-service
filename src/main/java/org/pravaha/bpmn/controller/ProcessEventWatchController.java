@@ -48,6 +48,19 @@ public class ProcessEventWatchController {
 		return null;
 	}
 
+	
+	@GetMapping(value = { "/getByEventTypeAndCorrId/{eventType}/{corrId}" })
+	public ProcessEventWatchVO getByEventTypeAndCorrId(@PathVariable("eventType") String eventType, @PathVariable("corrId") String corrId) {
+		try {
+			return eventWatchService.getEventByEventTypeAndCorrId(eventType, corrId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	
+	
 	@DeleteMapping(value = { "/delProcEveById/{id}" })
 	public Long delProcessEventWatch(@PathVariable("id") Long id) {
 		try {

@@ -32,13 +32,16 @@ public class ProcessDefinitionService {
 	}
 	
 	public ProcessDefinitionVO saveProcessDef(ProcessDefinitionVO processDef) {
-		ProcessDefinitionDomain domain = convertVOToDomain(processDef);
-		if(domain!=null) {
-			domain = definitionRepository.save(domain);
-			return convertDomaintoVO(domain);
-		} 
-		else
-			return null;
+		String processName = processDef.getProcessName();
+		ProcessDefinitionDomain domain = definitionRepository.findByProcessName(processName);
+		if(domain == null) {
+			domain = convertVOToDomain(processDef);
+			if(domain!=null) {
+				domain = definitionRepository.save(domain);
+				return convertDomaintoVO(domain);
+			}
+		}
+		return null;
 	}
 	
 	public ProcessDefinitionVO convertDomaintoVO(ProcessDefinitionDomain domain) {
