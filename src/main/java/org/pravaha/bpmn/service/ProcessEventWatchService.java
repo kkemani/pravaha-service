@@ -27,11 +27,12 @@ public class ProcessEventWatchService {
 
 	// Save ProcessEventWatch
 	public ProcessEventWatchVO saveProcessEventWatch(ProcessEventWatchVO eventWatchVO) {
+		System.out.println("Event  watch VO is :::: "+eventWatchVO.toString());
 		ProcessEventWatchDomain obj = null;
 		obj = convertVOtoDomain(eventWatchVO);
 		if (obj.getCreateDate() == null)
 			obj.setCreateDate(Calendar.getInstance().getTime());
-
+		System.out.println("Event watch domain :::: "+obj.toString());
 		eventWatchRespository.save(obj);
 		return convertDomaintoVO(obj);
 	}

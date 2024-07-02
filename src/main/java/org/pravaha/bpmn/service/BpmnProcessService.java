@@ -20,6 +20,12 @@ public class BpmnProcessService {
 		BpmnProcessRuntime bpmnRun = new BpmnProcessRuntime(processStartVo.getFileName());
 		List<BpmnProcessVariable> varList = processStartVo.getProcessVariableList();
 		Hashtable<String, Object> map = new Hashtable<String, Object>();
+		System.out.println("HashMap = "+map.toString());
+		System.out.println(map!=null);
+		
+		for(int i=0; i< varList.size(); i++) {
+			System.out.println("******************"+varList.get(i).toString());
+		}
 		
 		if (varList != null && !varList.isEmpty()) {
 		    varList.forEach(x -> map.put(x.getName(), x.getVariable())
@@ -41,7 +47,7 @@ public class BpmnProcessService {
 	
 	public void resumeProcess(String eventType, String correlationId) {
 		BpmnProcessRuntime bpmnRun = new BpmnProcessRuntime(eventType,correlationId,bpmnProcessDaoImpl);
-		
+		bpmnRun.resumeProcess();
 		
 	}
 	
