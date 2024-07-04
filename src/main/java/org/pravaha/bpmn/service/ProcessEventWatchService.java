@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.modelmapper.ModelMapper;
 import org.pravaha.bpmn.domain.ProcessEventWatchDomain;
 import org.pravaha.bpmn.domain.ProcessRuntimeDomain;
@@ -27,12 +29,10 @@ public class ProcessEventWatchService {
 
 	// Save ProcessEventWatch
 	public ProcessEventWatchVO saveProcessEventWatch(ProcessEventWatchVO eventWatchVO) {
-		System.out.println("Event  watch VO is :::: "+eventWatchVO.toString());
 		ProcessEventWatchDomain obj = null;
 		obj = convertVOtoDomain(eventWatchVO);
 		if (obj.getCreateDate() == null)
 			obj.setCreateDate(Calendar.getInstance().getTime());
-		System.out.println("Event watch domain :::: "+obj.toString());
 		eventWatchRespository.save(obj);
 		return convertDomaintoVO(obj);
 	}

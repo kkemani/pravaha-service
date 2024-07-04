@@ -83,10 +83,10 @@ public class ProcessTaskService {
 		return pdvo;
 	}
 	
-	public void saveProcessTask(ProcessTaskVO processTaskVo) {
+	public ProcessTaskVO saveProcessTask(ProcessTaskVO processTaskVo) {
 		ProcessTaskDomain obj = convertVOtoDomain(processTaskVo);
 		if (obj.getStartDate() == null)
 			obj.setStartDate(Calendar.getInstance().getTime());
-		processTaskRepository.save(obj);
+		return convertDomaintoVO(processTaskRepository.save(obj));
 	}
 }

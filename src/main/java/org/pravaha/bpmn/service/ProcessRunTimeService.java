@@ -126,7 +126,8 @@ public class ProcessRunTimeService extends ProcessRuntimeDao {
 	public ProcessRuntimeDomain convertVOtoDomain(Object vo) {
 		ProcessRuntimeDomain pd = modelMapper.map(vo, ProcessRuntimeDomain.class);
 		String processId = UUID.randomUUID().toString();
-		pd.setProcessId(processId);
+		if(pd.getProcessId() == null)
+			pd.setProcessId(processId);
 		String businessKey = UUID.randomUUID().toString();
 		pd.setBusinessKey(businessKey);
 		return pd;
@@ -149,7 +150,5 @@ public class ProcessRunTimeService extends ProcessRuntimeDao {
 
 		return null;
 	}
-
-
 
 }

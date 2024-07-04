@@ -62,9 +62,9 @@ public class BpmnProcessDaoImpl implements BpmnProcessDao {
 	}
 
 	@Override
-	public void saveProcessTask(ProcessTaskVO processTaskVO) {
+	public ProcessTaskVO saveProcessTask(ProcessTaskVO processTaskVO) {
 		// TODO Auto-generated method stub
-		processTaskService.saveProcessTask(processTaskVO);
+		return processTaskService.saveProcessTask(processTaskVO);
 		
 	}
 
@@ -88,9 +88,9 @@ public class BpmnProcessDaoImpl implements BpmnProcessDao {
 	}
 
 	@Override
-	public ProcessDefinitionVO getProcessDefinition(String processName) {
+	public ProcessDefinitionVO getProcessDefinition(String processName, String processVersion) {
 		// TODO Auto-generated method stub
-		return definitionService.getProcessDef(processName);
+		return definitionService.getProcessDef(processName,processVersion);
 	}
 
 	@Override

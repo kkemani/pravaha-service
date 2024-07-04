@@ -16,8 +16,9 @@ public class ProcessDefinitionService {
 	@Autowired
 	private ModelMapper modelMapper;
 
-	public ProcessDefinitionVO getProcessDef(String processName) {
-		ProcessDefinitionDomain domain = definitionRepository.findByProcessName(processName);
+	public ProcessDefinitionVO getProcessDef(String processName, String processVersion) {
+		ProcessDefinitionDomain domain = definitionRepository.findByProcessNameAndProcessVersion(processName,
+				processVersion);
 		if (domain != null) {
 			return convertDomaintoVO(domain);
 		} else
@@ -25,16 +26,17 @@ public class ProcessDefinitionService {
 	}
 
 	public ProcessDefinitionVO saveProcessDef(ProcessDefinitionVO processDef) {
-		System.out.println("ProcessDefinition **************"+processDef.toString());
 		String processName = processDef.getProcessName();
-		System.out.println("ProcessDefinition Name = ::: " + processName);
-		ProcessDefinitionDomain domain = definitionRepository.findByProcessName(processName);
-		domain = convertVOToDomain(processDef);
-		if (domain != null) {
+		String processVersion = processDef.getProcessVersion();
+		ProcessDefinitionDomain domain = definitionRepository.findByProcessNameAndProcessVersion(processName,
+				processVersion);
+		if (domain == null && processDef != null) {
+			domain = convertVOToDomain(processDef);
 			domain = definitionRepository.save(domain);
 			return convertDomaintoVO(domain);
 		} else
-			System.out.println("Domain is null for process def after converting to domain");
+			System.out.println("Domain is not null for process def with ProcessName: " + processName
+					+ " and processVersion : " + processVersion);
 		return null;
 	}
 

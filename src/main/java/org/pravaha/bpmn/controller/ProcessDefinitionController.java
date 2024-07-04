@@ -17,9 +17,9 @@ public class ProcessDefinitionController {
 	@Autowired
 	ProcessDefinitionService definitionService;
 	
-	@GetMapping(value = "/getProcessDef/{processName}")
-	public ProcessDefinitionVO getProcessDef(@PathVariable("processName") String processName) {
-		ProcessDefinitionVO vo = definitionService.getProcessDef(processName);
+	@GetMapping(value = "/getProcessDef/{processName}/{processversion}")
+	public ProcessDefinitionVO getProcessDef(@PathVariable("processName") String processName, @PathVariable("processversion") String processversion) {
+		ProcessDefinitionVO vo = definitionService.getProcessDef(processName,processversion);
 		return vo!=null ? vo : null;
 	}
 	

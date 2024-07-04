@@ -12,13 +12,13 @@ import lombok.Data;
 @Data
 public class ProcessDefinitionDomain {
 	
-	@Id
 	@Column(name="PROCESS_NAME")
 	private String processName;
 	
 	@Column(name="PROCESS_FILE")
 	private String processFileName;
 	
+	@Id
 	@Column(name="PROCESS_VERSION")
 	private String processVersion;
 
